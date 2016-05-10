@@ -25,7 +25,7 @@
     ]
   editor:
     fontFamily: "Operator Mono"
-    fontSize: 24
+    fontSize: 15
     invisibles:
       eol: " "
     scrollPastEnd: true
