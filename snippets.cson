@@ -1,0 +1,362 @@
+'html':
+  'script':
+    'prefix': 'script'
+    'body': '<script src=\'${1:js/script.js}\'></script>'
+
+# PHP
+
+'.php':
+  'b':
+    'prefix': 'b'
+    'body': '{${1:val}}'
+  'bv':
+    'prefix': 'bv'
+    'body': '\$stmt->bindValue(\":${1:bvar}\",${2:var});'
+  'class':
+    'prefix': 'class'
+    'body': """
+      class ${1:class_name}
+      {
+          public function __construct(){
+              ${2}
+          }${0}
+      }
+    """
+  'del':
+    'prefix': 'del'
+    'body': """
+      public function delete($id) {
+      	\$sql = \"DELETE FROM `${1:table}` WHERE `id` = :id\";
+      	\$stmt = \$this->pdo->prepare(\$sql);
+      	\$stmt->bindValue(\':id\', \$id);
+      	return \$stmt->execute();
+      }${0}
+    """
+  'f':
+    'prefix': 'f'
+    'body': '\$_FILE[\"${1}\"]'
+  'g':
+    'prefix': 'g'
+    'body': '\$_GET[\"${1}\"]'
+  'get':
+    'prefix': 'get'
+    'body': """
+      public function get${1:table}${2:s}(${3}){
+          \$sql = \"SELECT ${4:*}
+                  FROM `${1/[A-Z]/\L$0/:table}${2:s}`${5}\";
+          \$stmt = \$this->pdo->prepare($sql);${6}
+          if(\$stmt->execute()){
+              \$${1/[A-Z]/\L$0/:table}${2:s} = $stmt->${7:fetchAll}(PDO::FETCH_ASSOC);
+              if(!empty(\$${1/[A-Z]/\L$0/:table}${2:s})){
+                  return \$${1/[A-Z]/\L$0/:table}${2:s};
+              }
+          }
+          return array();
+      }${0}
+    """
+  'hl':
+    'prefix': 'hl'
+    'body': 'header(\"Location:${1:page}\");'
+  'ins':
+    'prefix': 'ins'
+    'body': """
+      \$sql = \"INSERT INTO `${1:table}` (${2})
+      		VALUES (${3})\";
+      \$stmt = \$pdo->prepare(\$sql);${4}
+      if(\$stmt->execute()){
+      	${5}
+      }${0}
+    """
+  'p':
+    'prefix': 'p'
+    'body': '\$_POST[\"${1}\"]'
+  's':
+    'prefix': 's'
+    'body': '\$_SESSION[\"${1}\"]'
+  'sa':
+    'prefix': 'sa'
+    'body': """
+      public function selectAll() {
+        \$sql = \"SELECT * FROM `${1:table}`\";
+        \$stmt = \$this->pdo->prepare(\$sql);
+        \$stmt->execute();
+        return \$stmt->fetchAll(PDO::FETCH_ASSOC);
+      }${0}
+    """
+  'sb':
+    'prefix': 'sb'
+    'body': """
+      public function selectBy${2:Id}(\$${2/[A-Z]/\L$0/:id}) {
+      	\$sql = \"SELECT *
+      					FROM `${1:table}`
+      					WHERE `${2/[A-Z]/\L$0/:id}` = :${2/[A-Z]/\L$0/:id}\";
+      	\$stmt = \$this->pdo->prepare(\$sql);
+      	\$stmt->bindValue(\':${2/[A-Z]/\L$0/:id}\', \$${2/[A-Z]/\L$0/:id});
+      	\$stmt->execute();
+      	\$result = \$stmt->fetch(PDO::FETCH_ASSOC);
+      	if(\$result){
+      		return \$result;
+      	}
+      	return [];
+      }
+    """
+  'set':
+    'prefix': 'set'
+    'body': '\$this->set(\"${1}\",\$${1});'
+  't':
+    'prefix': 't'
+    'body': '`${1:val}`'
+  'val':
+    'prefix': 'val'
+    'body': """
+      \$vals[\"${1:name}\"] = \"\";
+      if(empty(\$_POST[\"${1:name}\"])){
+      	\$errors[\"${1:name}\"] = \"${2:error}\";
+      }else{
+      	\$vals[\"${1:name}\"] = \$_POST[\"${1:name}\"];
+      }
+    """
+  'lg':
+    'prefix': 'lg'
+    'body': """
+      echo \"<pre>\";
+      var_dump(\$${1:var});
+      echo \"</pre>\";
+    """
+
+# JavaScript
+
+'.source.js':
+  'cdm':
+    'prefix': 'cdm'
+    'body': """
+      componentDidMount(){
+        ${0}
+      }
+    """
+  'dp':
+    'prefix': 'dp'
+    'body': """
+      static defaultProps = {
+
+      };
+    """
+  'pc':
+    'prefix': 'pc'
+    'body': """
+      import React from \'react\';
+
+      const ${1:ComponentName} = (${2:props}) => {
+        return (
+          <div>${3:Hello ${1:ComponentName}}</div>
+        );
+      };
+
+      export default ${1:ComponentName};
+    """
+  'pt':
+    'prefix': 'pt'
+    'body': """
+      ${1:ComponentName}.propTypes = {
+        ${0}
+      };
+    """
+  'sc':
+    'prefix': 'sc'
+    'body': """
+      import React, {Component} from \'react\';
+
+      class ${1:ComponentName} extends Component {
+
+        constructor(props, context){
+          super(props, context);
+        }
+
+        render() {
+          return (
+            ${2:<div>Hello ${1:ComponentName}</div>}
+          );
+        }
+
+      }
+
+      export default ${1:ComponentName};
+    """
+  'hp':
+    'prefix': 'hp'
+    'body': """
+      \'use strict\';
+
+      module.exports.register = (server, options, next) => {
+        ${0}
+        next();
+      };
+
+      module.exports.register.attributes = {
+        name: \'${1:pluginname}\',
+        version: \'${2:0.1.0}\'
+      };
+    """
+  'ael':
+    'prefix': 'ael'
+    'body': 'addEventListener(\'${1}\', ${0});'
+  'afunc':
+    'prefix': 'afunc'
+    'body': """
+      function(${1}){
+      	${0}
+      }
+    """
+  'an':
+    'prefix': 'an'
+    'body': """
+      (() => {
+
+      	${1}
+
+      })();
+    """
+  'arfunc':
+    'prefix': 'arfunc'
+    'body': """
+      const ${1} = (${2}) => {
+      	${0}
+      };
+    """
+  'bind':
+    'prefix': 'bind'
+    'body': '${1:function} = ::${1:function};'
+  'ce':
+    'prefix': 'ce'
+    'body': 'document.createElement(\'${1}\');${0}'
+  'cl':
+    'prefix': 'cl'
+    'body': """
+      export default class ${1:Class} {
+
+        constructor(){
+      		${0}
+        }
+
+      }
+    """
+  'delete':
+    'prefix': 'delete'
+    'body': """
+      fetch(`${2:url}`, {method: \'DELETE\'})
+        .then(r => r.json())
+        .then(data => {
+          ${3:console.log(data);}
+        });
+    """
+  'e':
+    'prefix': 'e'
+    'body': 'export ${0};'
+  'ed':
+    'prefix': 'ed'
+    'body': 'export default ${0}'
+  'edf':
+    'prefix': 'edf'
+    'body': """
+      export default (${1}) => {
+        ${0}
+      };
+    """
+  'ef':
+    'prefix': 'ef'
+    'body': 'export ${1} from \'${2}\';'
+  'exf':
+    'prefix': 'exf'
+    'body': 'export ${1} from \'${2}\';'
+  'get':
+    'prefix': 'get'
+    'body': """
+      fetch(`${1:url}`)
+        .then(r => r.json())
+        .then(data => {
+          ${2:console.log(data);}
+        });
+    """
+  'gv':
+    'prefix': 'gv'
+    'body': 'let ${1:ref} = this.refs.${1:ref}.value.trim();${0}'
+  'imf':
+    'prefix': 'imf'
+    'body': 'import ${1} from \'${2}\';${0}'
+  'init':
+    'prefix': 'init'
+    'body': """
+      const init = () => {
+        ${0}
+      };
+
+      init();
+    """
+  'lg':
+    'prefix': 'lg'
+    'body': 'console.log(${1});'
+  'me':
+    'prefix': 'me'
+    'body': 'module.exports = ${0};'
+  'mef':
+    'prefix': 'mef'
+    'body': """
+      module.exports = ${1:()} => {
+        ${0}
+      };
+    """
+  'p':
+    'prefix': 'p'
+    'body': """
+      return new Promise((resolve, reject) => {
+      	${0}
+      });
+    """
+  'pd':
+    'prefix': 'pd'
+    'body': 'e.preventDefault();'
+  'post':
+    'prefix': 'post'
+    'body': """
+      let settings = {
+        method: \'POST\',
+        body: ${1:formData}
+      };
+
+      fetch(`${2:url}`, settings)
+        .then(r => r.json())
+        .then(data => {
+          ${3:console.log(data);}
+        });
+    """
+  'proto':
+    'prefix': 'proto'
+    'body': """
+      ${1:Class}.prototype.${2:name} = function(${3}){
+      	${0}
+      };
+    """
+  'qs':
+    'prefix': 'qs'
+    'body': 'document.querySelector(\'${1}\');'
+  'qsa':
+    'prefix': 'qsa'
+    'body': 'document.querySelectorAll(\'${1}\');'
+  'raf':
+    'prefix': 'raf'
+    'body': 'requestAnimationFrame(${1:func});'
+  're':
+    'prefix': 're'
+    'body': 'require(\'${0}\');'
+  'si':
+    'prefix': 'si'
+    'body': 'setInterval(${1:func}, ${2:1000});'
+  'ss':
+    'prefix': 'ss'
+    'body': 'this.setState(${1});'
+  'st':
+    'prefix': 'st'
+    'body': 'setTimeout(${1:func}, ${2:1000});'
+  'strict':
+    'prefix': 'strict'
+    'body': '\'use strict\';'

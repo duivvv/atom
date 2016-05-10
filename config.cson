@@ -1,0 +1,48 @@
+"*":
+  core:
+    customFileTypes:
+      "source.json": [
+        ".eslintrc"
+        ".babelrc"
+      ]
+    disabledPackages: [
+      "highlight-line"
+      "advanced-new-file"
+      "print-atom"
+      "atomizr"
+      "change-case"
+      "dash"
+    ]
+    ignoredNames: [
+      "node_modules"
+      ".git"
+      "vendor"
+      ".DS_Store"
+    ]
+    themes: [
+      "spacegray-eighties-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+  editor:
+    fontFamily: "Operator Mono"
+    fontSize: 24
+    invisibles:
+      eol: " "
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    tabType: "soft"
+  emmet: {}
+  "exception-reporting":
+    userId: "c6f141fc-1bf4-55da-0565-26352e964b7d"
+  "linter-eslint":
+    fixOnSave: true
+  metrics:
+    userId: "f5f2bbce3042e0e0a8c3fecf2585aeebaf68254f"
+  "todo-show":
+    ignoreThesePaths: [
+      "**/js/"
+    ]
+  "tree-view": {}
+  welcome:
+    showOnStartup: false
