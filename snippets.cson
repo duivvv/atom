@@ -10,21 +10,22 @@
   'class':
     'prefix': 'class'
     'body': """
-      class ${1:class_name}
-      {
-          public function __construct(){
-              ${2}
-          }${0}
+      class ${1:class_name} {
+
+        public function __construct() {
+          ${2}
+        }
+
       }
     """
   'del':
     'prefix': 'del'
     'body': """
       public function delete($id) {
-      	\$sql = \"DELETE FROM `${1:table}` WHERE `id` = :id\";
-      	\$stmt = \$this->pdo->prepare(\$sql);
-      	\$stmt->bindValue(\':id\', \$id);
-      	return \$stmt->execute();
+        \$sql = \"DELETE FROM `${1:table}` WHERE `id` = :id\";
+        \$stmt = \$this->pdo->prepare(\$sql);
+        \$stmt->bindValue(\':id\', \$id);
+        return \$stmt->execute();
       }${0}
     """
   'f':
@@ -36,18 +37,22 @@
   'get':
     'prefix': 'get'
     'body': """
-      public function get${1:table}${2:s}(${3}){
+      public function get${1:table}${2:s}(${3}) {
+
           \$sql = \"SELECT ${4:*}
                   FROM `${1/[A-Z]/\L$0/:table}${2:s}`${5}\";
           \$stmt = \$this->pdo->prepare($sql);${6}
+
           if(\$stmt->execute()){
               \$${1/[A-Z]/\L$0/:table}${2:s} = $stmt->${7:fetchAll}(PDO::FETCH_ASSOC);
               if(!empty(\$${1/[A-Z]/\L$0/:table}${2:s})){
                   return \$${1/[A-Z]/\L$0/:table}${2:s};
               }
           }
+
           return array();
-      }${0}
+
+      }
     """
   'hl':
     'prefix': 'hl'
@@ -56,10 +61,10 @@
     'prefix': 'ins'
     'body': """
       \$sql = \"INSERT INTO `${1:table}` (${2})
-      		VALUES (${3})\";
+          VALUES (${3})\";
       \$stmt = \$pdo->prepare(\$sql);${4}
       if(\$stmt->execute()){
-      	${5}
+        ${5}
       }${0}
     """
   'p':
@@ -82,17 +87,17 @@
     'prefix': 'sb'
     'body': """
       public function selectBy${2:Id}(\$${2/[A-Z]/\L$0/:id}) {
-      	\$sql = \"SELECT *
-      					FROM `${1:table}`
-      					WHERE `${2/[A-Z]/\L$0/:id}` = :${2/[A-Z]/\L$0/:id}\";
-      	\$stmt = \$this->pdo->prepare(\$sql);
-      	\$stmt->bindValue(\':${2/[A-Z]/\L$0/:id}\', \$${2/[A-Z]/\L$0/:id});
-      	\$stmt->execute();
-      	\$result = \$stmt->fetch(PDO::FETCH_ASSOC);
-      	if(\$result){
-      		return \$result;
-      	}
-      	return [];
+        \$sql = \"SELECT *
+                FROM `${1:table}`
+                WHERE `${2/[A-Z]/\L$0/:id}` = :${2/[A-Z]/\L$0/:id}\";
+        \$stmt = \$this->pdo->prepare(\$sql);
+        \$stmt->bindValue(\':${2/[A-Z]/\L$0/:id}\', \$${2/[A-Z]/\L$0/:id});
+        \$stmt->execute();
+        \$result = \$stmt->fetch(PDO::FETCH_ASSOC);
+        if(\$result){
+          return \$result;
+        }
+        return [];
       }
     """
   'set':
@@ -106,9 +111,9 @@
     'body': """
       \$vals[\"${1:name}\"] = \"\";
       if(empty(\$_POST[\"${1:name}\"])){
-      	\$errors[\"${1:name}\"] = \"${2:error}\";
+        \$errors[\"${1:name}\"] = \"${2:error}\";
       }else{
-      	\$vals[\"${1:name}\"] = \$_POST[\"${1:name}\"];
+        \$vals[\"${1:name}\"] = \$_POST[\"${1:name}\"];
       }
     """
   'lg':
@@ -203,7 +208,7 @@
     'prefix': 'afunc'
     'body': """
       (${1}) => {
-      	${0}
+        ${0}
       }
     """
   'an':
@@ -211,7 +216,7 @@
     'body': """
       (() => {
 
-      	${1}
+        ${1}
 
       })();
     """
@@ -219,7 +224,7 @@
     'prefix': 'arfunc'
     'body': """
       const ${1} = (${2}) => {
-      	${0}
+        ${0}
       };
     """
   'bind':
@@ -237,7 +242,7 @@
       class ${1:ClassName} {
 
         constructor() {
-      		${0}
+          ${0}
         }
 
       }
@@ -346,7 +351,7 @@
     'prefix': 'p'
     'body': """
       return new Promise((resolve, reject) => {
-      	${0}
+        ${0}
       });
     """
   'pd':
@@ -359,7 +364,7 @@
     'prefix': 'proto'
     'body': """
       ${1:ObjectName}.prototype.${2:name} = (${3}) => {
-      	${0}
+        ${0}
       };
     """
   'qs':
