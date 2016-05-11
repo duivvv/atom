@@ -12,6 +12,7 @@
       "atomizr"
       "change-case"
       "dash"
+      "wordcount"
     ]
     ignoredNames: [
       "node_modules"
