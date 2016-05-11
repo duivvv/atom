@@ -1,12 +1,9 @@
 # PHP
 
 '.php':
-  'b':
-    'prefix': 'b'
-    'body': '{${1:val}}'
   'bv':
     'prefix': 'bv'
-    'body': '\$stmt->bindValue(\":${1:bvar}\",${2:var});'
+    'body': '\$stmt->bindValue(\':${1:bvar}\',${2:var});'
   'class':
     'prefix': 'class'
     'body': """
@@ -18,29 +15,25 @@
 
       }
     """
-  'del':
-    'prefix': 'del'
-    'body': """
-      public function delete($id) {
-        \$sql = \"DELETE FROM `${1:table}` WHERE `id` = :id\";
-        \$stmt = \$this->pdo->prepare(\$sql);
-        \$stmt->bindValue(\':id\', \$id);
-        return \$stmt->execute();
-      }${0}
-    """
   'f':
     'prefix': 'f'
-    'body': '\$_FILE[\"${1}\"]'
+    'body': '\$_FILE[\'${1}\']'
   'g':
     'prefix': 'g'
-    'body': '\$_GET[\"${1}\"]'
+    'body': '\$_GET[\'${1}\']'
+  'p':
+    'prefix': 'p'
+    'body': '\$_POST[\'${1}\']'
+  's':
+    'prefix': 's'
+    'body': '\$_SESSION[\'${1}\']'
   'get':
     'prefix': 'get'
     'body': """
       public function get${1:table}${2:s}(${3}) {
 
-          \$sql = \"SELECT ${4:*}
-                  FROM `${1/[A-Z]/\L$0/:table}${2:s}`${5}\";
+          \$sql = \'SELECT ${4:*}
+                  FROM `${1/[A-Z]/\L$0/:table}${2:s}`${5}\';
           \$stmt = \$this->pdo->prepare($sql);${6}
 
           if(\$stmt->execute()){
@@ -54,30 +47,31 @@
 
       }
     """
-  'hl':
-    'prefix': 'hl'
-    'body': 'header(\"Location:${1:page}\");'
+  'del':
+    'prefix': 'del'
+    'body': """
+      public function delete($id) {
+        \$sql = \'DELETE FROM `${1:table}` WHERE `id` = :id\';
+        \$stmt = \$this->pdo->prepare(\$sql);
+        \$stmt->bindValue(\':id\', \$id);
+        return \$stmt->execute();
+      }${0}
+    """
   'ins':
     'prefix': 'ins'
     'body': """
-      \$sql = \"INSERT INTO `${1:table}` (${2})
-          VALUES (${3})\";
+      \$sql = \'INSERT INTO `${1:table}` (${2})
+          VALUES (${3})\';
       \$stmt = \$pdo->prepare(\$sql);${4}
       if(\$stmt->execute()){
         ${5}
       }${0}
     """
-  'p':
-    'prefix': 'p'
-    'body': '\$_POST[\"${1}\"]'
-  's':
-    'prefix': 's'
-    'body': '\$_SESSION[\"${1}\"]'
   'sa':
     'prefix': 'sa'
     'body': """
       public function selectAll() {
-        \$sql = \"SELECT * FROM `${1:table}`\";
+        \$sql = \'SELECT * FROM `${1:table}`\';
         \$stmt = \$this->pdo->prepare(\$sql);
         \$stmt->execute();
         return \$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,9 +81,9 @@
     'prefix': 'sb'
     'body': """
       public function selectBy${2:Id}(\$${2/[A-Z]/\L$0/:id}) {
-        \$sql = \"SELECT *
+        \$sql = \'SELECT *
                 FROM `${1:table}`
-                WHERE `${2/[A-Z]/\L$0/:id}` = :${2/[A-Z]/\L$0/:id}\";
+                WHERE `${2/[A-Z]/\L$0/:id}` = :${2/[A-Z]/\L$0/:id}\';
         \$stmt = \$this->pdo->prepare(\$sql);
         \$stmt->bindValue(\':${2/[A-Z]/\L$0/:id}\', \$${2/[A-Z]/\L$0/:id});
         \$stmt->execute();
@@ -100,28 +94,21 @@
         return [];
       }
     """
+  'hl':
+    'prefix': 'hl'
+    'body': 'header(\'Location:${1:page}\');'
   'set':
     'prefix': 'set'
-    'body': '\$this->set(\"${1}\",\$${1});'
+    'body': '\$this->set(\'${1}\',\$${1});'
   't':
     'prefix': 't'
     'body': '`${1:val}`'
-  'val':
-    'prefix': 'val'
-    'body': """
-      \$vals[\"${1:name}\"] = \"\";
-      if(empty(\$_POST[\"${1:name}\"])){
-        \$errors[\"${1:name}\"] = \"${2:error}\";
-      }else{
-        \$vals[\"${1:name}\"] = \$_POST[\"${1:name}\"];
-      }
-    """
   'lg':
     'prefix': 'lg'
     'body': """
-      echo \"<pre>\";
+      echo \'<pre>\';
       var_dump(\$${1:var});
-      echo \"</pre>\";
+      echo \'</pre>\';
     """
 
 # JavaScript
